@@ -19,4 +19,4 @@ Create Environment From Scratch
 ---
 This shouldn't need to be done, but is documented in case it is needed.
 
-`conda create --prefix ./env jupyterlab matplotlib numpy pandas line_profiler markdown notebook python scipy scikit-learn`
+`conda create --name siads-orbital jupyterlab matplotlib numpy pandas line_profiler markdown notebook python scipy scikit-learn`
