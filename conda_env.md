@@ -2,7 +2,7 @@ Import Environment
 ---
 Importing the conda environment.
 
-`conda env create -f conda/environment.yml`
+`conda env create -f env/conda/environment.yml`
 
 Activate Environment
 ---
@@ -12,7 +12,7 @@ Export Current Environment
 ---
 Export your environment whenever you installed new packages.
 
-`conda env export --name siads-orbital > conda/environment.yml`
+`conda env export --name siads-orbital > env/conda/environment.yml`
 
 
 Create Environment From Scratch
