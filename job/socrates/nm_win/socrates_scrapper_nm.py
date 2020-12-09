@@ -73,6 +73,7 @@ def scrape_socrates(num_of_records, min_hours, data_file_path, sort_list):
     # Save the datetime this was scraped
     extract_date = datetime.utcnow()
     concat_df = pd.DataFrame()
+    print (f'{extract_date} UTC - Job started')
     
     for sort in sort_list:
         # Scrape data
@@ -111,6 +112,7 @@ def scrape_socrates(num_of_records, min_hours, data_file_path, sort_list):
     else:
         print(f'Not saving file since a file was created {time_dif} ago: {recent_file}')
 
+    print (f'{datetime.utcnow()} UTC - Job ended')
     return concat_df
     
 
