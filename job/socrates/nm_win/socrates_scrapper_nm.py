@@ -118,7 +118,7 @@ def scrape_socrates(num_of_records, min_hours, data_file_path, sort_list):
 
 # Parameters:
 #-----------------
-num_of_records = 25
+num_of_records = 1000
 min_hours = 6
 data_file_path = '../../../data/socrates/'
 sort = ['MAXPROB', 'MINRANGE', 'TIMEIN']
