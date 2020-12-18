@@ -1,3 +1,4 @@
 .ipynb_checkpoints
 playground/tim_fetch/space-track-credentials.json
 *.key
+*.swp
