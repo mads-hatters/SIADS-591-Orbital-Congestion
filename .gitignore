@@ -2,3 +2,4 @@
 playground/tim_fetch/space-track-credentials.json
 *.key
 *.swp
+*.cpython-38.pyc
