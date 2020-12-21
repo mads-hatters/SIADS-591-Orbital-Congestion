@@ -143,7 +143,6 @@ def get_all_socrates_and_tle_data(socrates_files_path, tle_file_path):
     tle_df : Pandas Dataframe
         Trimmed set of socrates data with TLE data (from file only)
     '''
-    tle_file_path = '../../data/socrates_tca_gp_history_tle.pkl.gz'
     
     soc_df = get_socrates_cleaned_data(socrates_files_path)
     tle_df = get_socrates_with_tle_data(soc_df, tle_file_path)
