@@ -48,24 +48,8 @@ def get_all_socrates_data(path):
     
     return df
 
-group_num = 0
-def __set_group_number(x):
-    '''
-    Returns group number for each row (via pd.apply)
-    
-    Parameters:
-    -----------
-    x : Boolean
-    
-    Returns
-    -------
-    group_num : int
-    '''
-    global group_num
-    if x:
-        group_num += 1
-    return group_num
 
+socrates_group_num = 0
 def get_socrates_cleaned_data(path):
     '''
     Builds a dataframe out of all the socrates data files
@@ -81,6 +65,13 @@ def get_socrates_cleaned_data(path):
     df : Pandas Dataframe
         Combined set of all socrates data
     '''
+    
+    def __set_group_number(x):
+        global socrates_group_num
+        if x:
+            socrates_group_num += 1
+        return socrates_group_num
+
     df = get_all_socrates_data(path)
 
     # Clean the data
@@ -148,3 +139,49 @@ def get_all_socrates_and_tle_data(socrates_files_path, tle_file_path):
     tle_df = get_socrates_with_tle_data(soc_df, tle_file_path)
     
     return soc_df, tle_df
+
+def assign_socrates_category(df, detailed=False):
+    '''
+    Returns the dataframe with two new columns containing the sat1_name and sat2_name decoded
+    to contain the sat1_cat and sat2_cat (category).
+    
+    Parameters:
+    -----------
+    df : Pandas Dataframe
+        A socrates dataframe containing the sat1_name and sat2_name
+        
+    detailed : bool
+        Returns the detailed category or a summary.  Summary contains only operational,
+        nonoperational and unknown.
+    
+    Returns
+    -------
+    df : Pandas Dataframe
+        Socrates dataframe passed in with 2 new columns: sat1_cat and sat2_cat
+    '''
+    
+    def __detail_category(val):
+        if val == '+':
+            return 'Operational'
+        elif val == 'P':
+            return 'Paritally Operational'
+        elif val == 'B':
+            return 'Backup/Reserve'
+        elif val == 'S':
+            return 'New Spare'
+        elif val == 'X':
+            return 'Extended Mission'
+        elif val == '-':
+            return 'Nonoperational'
+        elif val == 'D':
+            return 'Decayed'
+        else:
+            return 'Unknown'
+    
+    if detailed:
+        df['sat1_cat'] = df['sat1_name'].str[-2:-1].apply(__detail_category)
+    else:
+        df['sat1_cat'] = df['sat1_name'].str[-2:-1].apply(lambda x: 'Operational' if x in ['+','P','B','S','X'] else ('Nonoperational' if x in ['-','D'] else 'Unknown'))
+        df['sat2_cat'] = df['sat2_name'].str[-2:-1].apply(lambda x: 'Operational' if x in ['+','P','B','S','X'] else ('Nonoperational' if x in ['-','D'] else 'Unknown'))
+    
+    return df
