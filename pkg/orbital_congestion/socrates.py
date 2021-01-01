@@ -28,7 +28,7 @@ def get_all_socrates_data(path):
 
     # Build single dataset
     df = pd.DataFrame()
-    for file,date in files:
+    for file,date in tqdm(files):
         tmp_df = pd.read_csv(path + file)
         df = pd.concat([df,tmp_df])
 
