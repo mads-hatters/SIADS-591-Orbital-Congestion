@@ -17,18 +17,18 @@ class satellite():
     description = ''
     color = ''
     image = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNS" +
-               "R0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZ" +
-               "HRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3" +
-               "Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2x" +
-               "bt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+Ee" +
-               "HhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=")
+             "R0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZ" +
+             "HRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3" +
+             "Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2x" +
+             "bt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+Ee" +
+             "HhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=")
     marker_scale = 1.5
     start_time = datetime.utcnow().replace(tzinfo=pytz.UTC)
     end_time = start_time + timedelta(hours=24)
     tle = []
     tle_obj = None
     
-    czmlBillboard = None
+    czmlMarker = None
     czmlLabel = None
     czmlPath = None
     czmlPosition = None
@@ -115,11 +115,11 @@ class satellite():
         '''
         Creates the satellite marker (i.e. billboard)
         '''
-        if self.czmlBillboard is None:
-            self.czmlBillboard = Billboard(scale=marker_scale or self.marker_scale,
-                                           show=show_marker)
-            self.czmlBillboard.image = image or self.image
-        return self.czmlBillboard
+        if self.czmlMarker is None:
+            self.czmlMarker = Billboard(scale=marker_scale or self.marker_scale,
+                                        show=show_marker)
+            self.czmlMarker.image = image or self.image
+        return self.czmlMarker
 
     def build_label(self, color=None,
                     font='11pt Lucida Console',
