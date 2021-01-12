@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 import pytz
 import random
 import math
-from tqdm import tqdm
 
 class satellite():
     '''
@@ -28,7 +27,7 @@ class satellite():
     show_label = True
     show_path = True
     start_time = datetime.utcnow().replace(tzinfo=pytz.UTC)
-    end_time = start_time + timedelta(hours=1)
+    end_time = start_time + timedelta(hours=24)
     tle = []
     tle_obj = None
     
@@ -361,7 +360,7 @@ class satellite_czml():
     '''
 
     start_time = datetime.utcnow().replace(tzinfo=pytz.UTC)
-    end_time = start_time + timedelta(hours=1)
+    end_time = start_time + timedelta(hours=24)
     speed_multiplier = 60
     default_seed = 0
     ignore_bad_tles=False
@@ -405,7 +404,7 @@ class satellite_czml():
         self.ignore_bad_tles = ignore_bad_tles
 
         # Create Satellite for each TLE in list
-        for i,tle in tqdm(enumerate(tle_list)):
+        for i,tle in enumerate(tle_list):
             try:
                 sat = satellite(tle=tle,
                                 name=name_list[i],
@@ -500,7 +499,7 @@ class satellite_czml():
         doc.packets.append(packet)
 
         # Add each satellite
-        for id, sat in tqdm(self.satellites.items()):
+        for id, sat in self.satellites.items():
             # Initialize satellite CZML data
             try:
                 sat_packet = CZMLPacket(id=id)
