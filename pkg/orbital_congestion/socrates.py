@@ -180,6 +180,7 @@ def assign_socrates_category(df, detailed=False):
     
     if detailed:
         df['sat1_cat'] = df['sat1_name'].str[-2:-1].apply(__detail_category)
+        df['sat2_cat'] = df['sat2_name'].str[-2:-1].apply(__detail_category)
     else:
         df['sat1_cat'] = df['sat1_name'].str[-2:-1].apply(lambda x: 'Operational' if x in ['+','P','B','S','X'] else ('Nonoperational' if x in ['-','D'] else 'Unknown'))
         df['sat2_cat'] = df['sat2_name'].str[-2:-1].apply(lambda x: 'Operational' if x in ['+','P','B','S','X'] else ('Nonoperational' if x in ['-','D'] else 'Unknown'))
