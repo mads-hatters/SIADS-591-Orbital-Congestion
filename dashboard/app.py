@@ -182,7 +182,7 @@ function(id, czml, menu_item) {
 
     // Update the Cesium Viewer
     if (czml && menu_item == 'menu-item-intercepts') {
-
+        window.viewer.dataSources.removeAll();
         czmlJson = JSON.parse(czml);
         window.viewer.dataSources.add(
             Cesium.CzmlDataSource.load(czmlJson)
@@ -217,7 +217,7 @@ function(id, czml, menu_item) {
 
     // Update the Cesium Viewer
     if (czml && menu_item == 'menu-item-starlink') {
-
+        window.viewer.dataSources.removeAll();
         czmlJson = JSON.parse(czml);
         window.viewer.dataSources.add(
             Cesium.CzmlDataSource.load(czmlJson)
