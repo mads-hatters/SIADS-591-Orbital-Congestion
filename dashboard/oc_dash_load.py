@@ -15,7 +15,7 @@ def load_intercept_data():
     Loads the pandas dataframe for intercepts
     '''
     socrates_files_path = '../data/socrates/'
-    tle_file_path = '../data/socrates_tca_gp_history_tle.pkl.gz'
+    tle_file_path = '../data/space-track-gp-history/gp_history_socrates_tca_tles.pkl.gz'
 
     soc_df, tle_df = socrates.get_all_socrates_and_tle_data(socrates_files_path, tle_file_path)
     tle_df = socrates.assign_socrates_category(tle_df, True)
