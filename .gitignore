@@ -1,6 +1,6 @@
 .ipynb_checkpoints
 space-track-credentials.json
-/tmp
+tmp/
 *.key
 *.swp
 *.cpython-38.pyc
