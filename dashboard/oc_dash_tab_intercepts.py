@@ -13,9 +13,7 @@ from datetime import date, timedelta
 import oc_dash_load
 import oc_dash_utils
 
-import sys
-sys.path.append('..')
-from pkg.orbital_congestion.satellite_czml import satellite_czml
+from satellite_czml import satellite_czml
 
 
 
@@ -220,8 +218,10 @@ class intercepts():
                                     html.Div(className='table-responsive',children=[
                                         ##########################################################
                                         # Cesium
-                                        html.Div(id='cesiumContainer'),
-                                        html.Div(id='czml', style={'display': 'none'})
+                                        dcc.Loading(id='cesium-intercept', type="circle", children=[
+                                            html.Div(id='cesiumContainer'),
+                                            html.Div(id='czml', style={'display': 'none'})
+                                        ])
                                     ])
                                 ])
                             ])

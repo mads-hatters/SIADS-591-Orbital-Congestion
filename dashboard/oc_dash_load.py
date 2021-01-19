@@ -3,11 +3,16 @@
 
 import pandas as pd
 
-import sys
-sys.path.append('..')
-from pkg.orbital_congestion import socrates
-
 import oc_dash_utils
+
+try:
+    # Package not included with Heroku
+    import sys
+    sys.path.append('..')
+    from pkg.orbital_congestion import socrates
+except:
+    pass
+
 
 
 def load_intercept_data():
@@ -41,9 +46,17 @@ def load_satellite_data():
     gpd_df['LAUNCH_DATE'] = gpd_df.apply(lambda x: x['LAUNCH_DATE'] if x['exist_date'] is None else x['exist_date'], axis=1)
     gpd_df = gpd_df.rename(columns={'OBJECT_TYPE_y': 'OBJECT_TYPE'})
     
+    gpd_df['RCS_SIZE'] = gpd_df['RCS_SIZE'].fillna('X')
+    
     gpd_df['description'] = gpd_df.apply(lambda x: u.generate_satellite_description(gp_row=x), axis=1)
     columns.append('description')
 
     return gpd_df[columns]
 
-
+def load_data():
+    '''
+    Faster load if other saved pickle files from other load functions
+    '''
+    satellite_data = pd.read_pickle("./data/satellite_data.pkl.gz")
+    intercept_data = pd.read_pickle("./data/intercept_data.pkl.gz")
+    return satellite_data, intercept_data

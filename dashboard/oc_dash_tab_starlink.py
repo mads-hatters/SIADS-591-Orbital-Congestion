@@ -7,9 +7,7 @@ import dash_daq as daq
 
 import random
 
-import sys
-sys.path.append('..')
-from pkg.orbital_congestion.satellite_czml import satellite_czml
+from satellite_czml import satellite_czml
 
 
 

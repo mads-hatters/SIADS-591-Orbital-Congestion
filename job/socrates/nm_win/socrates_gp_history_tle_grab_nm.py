@@ -138,6 +138,6 @@ def grab_gp_history_data(socrates_files_path, tle_file_path, spacetrack_key_file
 
 
 socrates_files_path = '../../../data/socrates/'
-tle_file_path = '../../../data/socrates_tca_gp_history_tle.pkl.gz'
+tle_file_path = '../../../data/space-track-gp-history/gp_history_socrates_tca_tles.pkl.gz'
 
 grab_gp_history_data(socrates_files_path, tle_file_path)

@@ -25,7 +25,7 @@ class utils():
         '''
         Generates the satellite descriptions that are displayed in Cesium
         '''
-        rcs_map = {'SMALL':'Small (< 0.1m^2)', 'MEDIUM':'Medium (0.1m^2 - 1m^2)','LARGE': 'Large (>1m^2)', np.NaN: 'Unknown'}
+        rcs_map = {'SMALL':'Small (< 0.1m^2)', 'MEDIUM':'Medium (0.1m^2 - 1m^2)','LARGE': 'Large (>1m^2)', 'X': 'Unknown'}
 
         if row is not None:
             name = row[sat + '_name'][:-4]
