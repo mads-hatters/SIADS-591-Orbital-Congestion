@@ -11,11 +11,8 @@ from oc_dash_tab_intercepts import intercepts
 from oc_dash_tab_spatialdensity import spatial_density
 from oc_dash_tab_starlink import starlink
 
-# Load Spatial Density dataset
-gpd_df = oc_dash_load.load_satellite_data()
-
-# Load the intercept dataset
-tle_df = oc_dash_load.load_intercept_data()
+# Load Spatial Density and intercept datasets
+gpd_df, tle_df = oc_dash_load.load_data()
 
 # Setup the differnt tabs to display
 tab_intercept = intercepts(tle_df, gpd_df)
@@ -72,6 +69,8 @@ app = dash.Dash(__name__,
                 external_scripts=external_scripts,
                 external_stylesheets=external_css)
 
+server = app.server
+
 # Setup the main dashboard with navigation sidebar
 app.layout = html.Div(className='skin-blue', children=[
     html.Div(className='wrapper',children=[
@@ -116,7 +115,8 @@ app.layout = html.Div(className='skin-blue', children=[
                                     style=menu_tab_style,
                                     selected_style=menu_tab_selected_style),
                         ]),
-                        html.Div(id='ui_dummy', style={'display': 'none'})
+                        html.Div(id='ui_dummy', style={'display': 'none'}),
+                        html.Div(id='csk', style={'display': 'none'}, children="ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnFkR2tpT2lJd05tSXdORGN5WkMwNE5tUTBMVFExTnpRdFltVTNOeTAxWVRabFpUVTRNRFUzWkRVaUxDSnBaQ0k2TkRBeE5ESXNJbWxoZENJNk1UWXdPRE0xTkRZNE9IMC5uT1pBQ291ay0tZnhQX2V1cXRnRmt3d05TMi02NEJaODFBTWVNbzlwZ1lj")
                     ])
                 ])
             ])
@@ -165,7 +165,7 @@ def update_satellite_filter(show_path):
 
 # Draw and Update Cesium Object on Intercept Menu
 app.clientside_callback('''
-function(id, czml, menu_item) {
+function(id, czml, menu_item, apikey) {
     // Changed menu - rebuild the viewer
     if (menu_item != window.prev_menu) {
         window.viewer = ''
@@ -173,7 +173,7 @@ function(id, czml, menu_item) {
 
     // Create the Cesium Viewer
     if (!window.viewer && menu_item == 'menu-item-intercepts') {
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNmIwNDcyZC04NmQ0LTQ1NzQtYmU3Ny01YTZlZTU4MDU3ZDUiLCJpZCI6NDAxNDIsImlhdCI6MTYwODM1NDY4OH0.nOZACouk--fxP_euqtgFkwwNS2-64BZ81AMeMo9pgYc";
+        Cesium.Ion.defaultAccessToken = atob(apikey);
         window.viewer = new Cesium.Viewer(id,{
             shouldAnimate: true,
         });
@@ -195,12 +195,13 @@ function(id, czml, menu_item) {
     Output('cesiumContainer', 'data-done'),
     Input('cesiumContainer', 'id'),
     Input('czml', 'children'),
-    Input('menu-tabs', 'value')
+    Input('menu-tabs', 'value'),
+    Input('csk', 'children')
 )
 
 # Draw and Update Cesium Object on Starlink Menu
 app.clientside_callback('''
-function(id, czml, menu_item) {
+function(id, czml, menu_item, apikey) {
     // Changed menu - rebuild the viewer
     if (menu_item != window.prev_menu) {
         window.viewer = ''
@@ -208,7 +209,7 @@ function(id, czml, menu_item) {
 
     // Create the Cesium Viewer
     if (!window.viewer && menu_item == 'menu-item-starlink') {
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNmIwNDcyZC04NmQ0LTQ1NzQtYmU3Ny01YTZlZTU4MDU3ZDUiLCJpZCI6NDAxNDIsImlhdCI6MTYwODM1NDY4OH0.nOZACouk--fxP_euqtgFkwwNS2-64BZ81AMeMo9pgYc";
+        Cesium.Ion.defaultAccessToken = atob(apikey);
         window.viewer = new Cesium.Viewer(id,{
             shouldAnimate: true,
         });
@@ -222,7 +223,6 @@ function(id, czml, menu_item) {
         window.viewer.dataSources.add(
             Cesium.CzmlDataSource.load(czmlJson)
         );
-
     }
     window.prev_menu = menu_item
 
@@ -231,7 +231,8 @@ function(id, czml, menu_item) {
     Output('cesiumContainer2', 'data-done'),
     Input('cesiumContainer2', 'id'),
     Input('czml2', 'children'),
-    Input('menu-tabs', 'value')
+    Input('menu-tabs', 'value'),
+    Input('csk', 'children')
 )
 
 # Enable UI Functionality
