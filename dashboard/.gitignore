@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+__pycache__
+*.key
+*.swp
+*.cpython-38.pyc
+*.pyc
+.env
+.DS_Store
+venv
