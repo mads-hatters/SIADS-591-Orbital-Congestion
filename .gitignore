@@ -1,5 +1,6 @@
 .ipynb_checkpoints
-playground/tim_fetch/space-track-credentials.json
+space-track-credentials.json
+tmp/
 *.key
 *.swp
 *.cpython-38.pyc
