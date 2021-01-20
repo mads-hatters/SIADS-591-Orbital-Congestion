@@ -225,7 +225,6 @@ class allsats():
         '''
         # Texture
         img = cv2.imread('./assets/cylindrical_sterogrpahic.png')
-        display(img.shape)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # convert to greyscale
         img = cv2.resize(img, (size,size), interpolation = cv2.INTER_AREA)  #resize image to match graph linspace
         img = np.fliplr(img) # flip the image

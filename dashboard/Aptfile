@@ -1,0 +1,2 @@
+# this adds support for cv2 used by plotly 3d earth plot
+libgl1

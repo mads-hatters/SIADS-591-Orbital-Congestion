@@ -1,3 +1,4 @@
+# opencv is for cv2
 numpy==1.19.2
 pandas==1.1.5
 plotly==4.14.1
