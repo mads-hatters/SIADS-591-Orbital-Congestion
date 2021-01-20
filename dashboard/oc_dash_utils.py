@@ -3,7 +3,11 @@
 
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
+from skyfield.api import Loader, EarthSatellite
+from skyfield.timelib import Time
+from skyfield.api import utc
 
 
 class utils():
@@ -13,11 +17,15 @@ class utils():
 
     intercept_df = None
     sat_df = None
+    timescale = None
 
     def __init__(self, intercept_df=None, sat_df=None):
         '''
         Initialize
         '''
+        load = Loader('./data')
+        data = load('de421.bsp')
+        self.timescale = load.timescale()
         self.intercept_df = intercept_df
         self.sat_df = sat_df
 
@@ -25,7 +33,6 @@ class utils():
         '''
         Generates the satellite descriptions that are displayed in Cesium
         '''
-        rcs_map = {'SMALL':'Small (< 0.1m^2)', 'MEDIUM':'Medium (0.1m^2 - 1m^2)','LARGE': 'Large (>1m^2)', 'X': 'Unknown'}
 
         if row is not None:
             name = row[sat + '_name'][:-4]
@@ -37,7 +44,7 @@ class utils():
             if len(gp)==1:
                 alt_id = gp.iloc[0]['OBJECT_ID']
                 obj_typ = gp.iloc[0]['OBJECT_TYPE']
-                obj_size = rcs_map[gp.iloc[0]['RCS_SIZE']]
+                obj_size = gp.iloc[0]['RCS_SIZE_NAME']
                 country = gp.iloc[0]['COUNTRY_CODE']
                 launch_dt = gp.iloc[0]['LAUNCH_DATE'].strftime('%Y-%m-%d')
                 launch_site = gp.iloc[0]['SITE']
@@ -50,7 +57,7 @@ class utils():
 
             alt_id = gp_row['OBJECT_ID']
             obj_typ = gp_row['OBJECT_TYPE']
-            obj_size = rcs_map[gp_row['RCS_SIZE']]
+            obj_size = gp_row['RCS_SIZE_NAME']
             country = gp_row['COUNTRY_CODE']
             if pd.isnull(gp_row['LAUNCH_DATE']):
                 launch_dt = 'Unknown'
@@ -86,3 +93,22 @@ class utils():
                <a href='https://www.n2yo.com/satellite/?s={norad}#results' target='_blank'>More info on N2YO</a>
                </p>
                '''
+    def get_xyz(self, row):
+        '''
+        Gets the x,y,z coordinates of a satellite
+        '''
+        now  = self.timescale.utc(datetime.utcnow().replace(tzinfo=utc))
+        return EarthSatellite(row['TLE_LINE1'], row['TLE_LINE2']).at(now).position.km
+
+    def get_allsat_text(self, x):
+        '''
+        This sets the text on the satellites when hovering over them
+        '''
+        text = '<b>Name</b>: ' + str(x['OBJECT_NAME']) + '<br>' +\
+               '<b>Country</b>: ' + str(x['country']) + '<br>' +\
+               '<b>Object Type</b>: ' + str(x['OBJECT_TYPE']) + '<br>' +\
+               '<b>Launch Date</b>: ' + (x['LAUNCH_DATE'].strftime('%Y-%m-%d %H:%M:%S.%f') if pd.notnull(x['LAUNCH_DATE']) else 'Unknown') + '<br>' +\
+               '<b>Size</b>: ' + x['RCS_SIZE_NAME'] + '<br>' +\
+               '<b>NORAD ID</b>: ' + str(x['NORAD_CAT_ID']) + '<br>' +\
+               '<b>Object ID</b>: ' + str(x['OBJECT_ID'])
+        return text

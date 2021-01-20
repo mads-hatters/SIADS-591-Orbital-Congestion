@@ -4,12 +4,13 @@
 import dash
 import dash_html_components as html
 import dash_core_components as dcc
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 import oc_dash_load
 from oc_dash_tab_intercepts import intercepts
 from oc_dash_tab_spatialdensity import spatial_density
 from oc_dash_tab_starlink import starlink
+from oc_dash_tab_allsats import allsats
 
 # Load Spatial Density and intercept datasets
 gpd_df, tle_df = oc_dash_load.load_data()
@@ -18,6 +19,7 @@ gpd_df, tle_df = oc_dash_load.load_data()
 tab_intercept = intercepts(tle_df, gpd_df)
 tab_spatial = spatial_density(gpd_df)
 tab_starlink = starlink(gpd_df)
+tab_allsats = allsats(gpd_df)
 
 # This will style the menu (tabs) to appear correctly
 menu_tabs_styles = {
@@ -98,10 +100,14 @@ app.layout = html.Div(className='skin-blue', children=[
                     html.Li(children=[
                         dcc.Tabs(id="menu-tabs", vertical=True,
                                  parent_style={'float': 'left'},
-                                 value='menu-item-intercepts',
+                                 value='menu-item-allsats',
                                  className="treeview-menu",
                                  style=menu_tabs_styles,
                                  children=[
+                            dcc.Tab(label='All Satellites',
+                                    value='menu-item-allsats',
+                                    style=menu_tab_style,
+                                    selected_style=menu_tab_selected_style),
                             dcc.Tab(label='Intercepts',
                                     value='menu-item-intercepts',
                                     style=menu_tab_style,
@@ -136,7 +142,37 @@ def render_content(menu_item):
         return tab_spatial.get_page_content()
     elif menu_item == 'menu-item-starlink':
         return tab_starlink.get_page_content()
+    elif menu_item == 'menu-item-allsats':
+        return tab_allsats.get_page_content()
 
+# Handle allsats settings
+@app.callback(
+    #Output('allset-table-filter', 'data'),
+    Output('allset-table-load','children'),
+    Input('dd-allsat-colorby', 'value'))
+def update_allsat_settings(color_by):
+    return tab_allsats.generate_group_table(color_by)
+    
+# Handle allsats table changes
+@app.callback(
+    Output('allsat-graph-load', 'children'),
+    Input('dd-allsat-colorby', 'value'),
+    Input('allsat-colorseed', 'value'),
+    Input('allset-table-filter', 'derived_virtual_data'),
+    Input('allset-table-filter', 'derived_virtual_selected_rows'))
+def update_allsat_display(color_by, color_seed, rows, indexes):
+    return tab_allsats.generate_all_sats(color_by, color_seed, rows, indexes)
+
+# Handle allsats select buttons
+@app.callback(
+    [Output('allset-table-filter', 'selected_rows'),],
+    [Input('satall-selall', 'n_clicks'),
+    Input('satall-desall', 'n_clicks')],
+    [State('allset-table-filter', 'derived_virtual_data'),]
+)
+def update_allsat_selection(selbtn, deselbtn, selected_rows):
+    return tab_allsats.select_deselect(selbtn, deselbtn, selected_rows)
+    
 # Handle intercept filter criteria changes
 @app.callback(
     Output('intercept-table', 'data'),

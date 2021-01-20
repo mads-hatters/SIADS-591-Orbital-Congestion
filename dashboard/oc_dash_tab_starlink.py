@@ -58,7 +58,7 @@ class starlink():
                     html.H1(children='Starlink Satellites'),
                     html.Ol(className='breadcrumb',children=[
                         html.Li(children=[html.I(className='fa fa-dashboard'),' Home']),
-                        html.Li(className='active',children='Satellites'),
+                        html.Li(className='active',children='Starlink Satellites'),
                     ])
                 ]),
                 html.Section(className='content',children=[
