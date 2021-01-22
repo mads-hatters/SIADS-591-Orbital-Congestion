@@ -1,0 +1,5 @@
+Add this in credits
+
+http://www.sidc.be/silso/datafiles#total
+
+Data Credits: The Sunspot Number data can be freely downloaded. However, we request that proper credit to the WDC-SILSO is explicitely included in any publication using our data (paper article or book, on-line Web content, etc.), e.g.: "Source: WDC-SILSO, Royal Observatory of Belgium, Brussels".
