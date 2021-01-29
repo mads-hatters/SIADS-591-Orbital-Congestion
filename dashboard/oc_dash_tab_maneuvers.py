@@ -25,19 +25,54 @@ class maneuvers():
         '''
     def get_tab_content(self, tab):
         if tab == 'maneuver-aqua':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/AQUA (27424).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/AQUA (27424)_combined.png'),
+                        html.P("Description of above image")
+                   ])
         elif tab == 'maneuver-cosmos':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/COSMOS 2251 (22675).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/COSMOS 2251 (22675)_combined.png'),
+                        html.P("Description of above image")
+                   ])
         elif tab == 'maneuver-gcom':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/GCOM W1 (38337).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/GCOM W1 (38337)_combined.png'),
+                        html.P("Description of above image")
+                   ])
         elif tab == 'maneuver-glast':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/GLAST (33053).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/GLAST (33053)_combined.png'),
+                        html.P("Description of above image")
+                   ])
         elif tab == 'maneuver-iss':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/ISS (ZARYA) (25544).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/ISS (ZARYA) (25544)_combined.png'),
+                        html.P("Description of above image")
+                   ])
         elif tab == 'maneuver-oco':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/OCO 2 (40059).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/OCO 2 (40059)_combined.png'),
+                        html.P("Description of above image")
+                   ])
         elif tab == 'maneuver-payloadc':
-            return html.Img(src='images/AQUA (27424).png')
+            return html.Div(children=[
+                        html.Img(src='./assets/PAYLOAD C (39210).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/PAYLOAD C (39210)_combined.png'),
+                        html.P("Description of above image")
+                   ])
 
 
     def get_page_content(self):
@@ -46,7 +81,7 @@ class maneuvers():
         '''
 
         return [html.Section(className='content-header',children=[
-                    html.H1(children='History'),
+                    html.H1(children='Maneuver Detection'),
                     html.Ol(className='breadcrumb',children=[
                         html.Li(children=[html.I(className='fa fa-dashboard'),' Home']),
                         html.Li(className='active',children='Maneuver Detection'),
@@ -57,12 +92,7 @@ class maneuvers():
                         html.Div(className='col-md-12',children=[
                             html.Div(className='box',children=[
                                 html.Div(className='box-header with-border',children=[
-                                    html.H3(className='box-title',children='Maneuver Detection'),
-                                    html.Div(className='box-tools pull-right', children=[
-                                        html.Button(className='btn btn-box-tool', **{'data-widget': 'collapse'}, children=[
-                                            html.I(className='fa fa-minus')
-                                        ])
-                                    ])
+                                    html.H3(className='box-title',children='Maneuver Detection')
                                 ]),
                                 html.Div(className='box-body',children=[
                                     html.P("A few noval approaches were attempted to detect satellite maneuvers as demonistrated in the following images."),
