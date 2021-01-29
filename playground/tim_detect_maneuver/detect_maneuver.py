@@ -82,18 +82,18 @@ def plot_maneuvers(df, maneuver_results, sat_name):
                     ax[j+1,i].axvspan(er.start, er.end, alpha=0.5, color=cmap((k+1)/(len(thresholds)+2)), label="_")
     return fig
 
-def plot_combined_maneuvers(df, event_range, sat_name):
-    fig, ax = plt.subplots(squeeze=True, figsize=(15,7))
+def plot_combined_maneuvers(fig, ax, df, event_range, sat_name):
     fig.suptitle(sat_name, fontsize=15)
     ax.set_title("Maneuvers Detected", fontsize=13)
     ax.set_xlim(df.index[0], df.index[-1])
     df['SEMIMAJOR_AXIS'].plot(ax=ax, label="SEMIMAJOR_AXIS")
-    a2 = ax.twinx()
-    df['INCLINATION'].plot(ax=a2, color="#fc8215", label="INCLINATION")
+    ax2 = ax.twinx()
+    ax.set_ylabel("Semimajor Axis")
+    ax2.set_ylabel("Inclination")
+    df['INCLINATION'].plot(ax=ax2, color="#fc8215", label="INCLINATION")
     for _,er in event_range.iterrows():
         ax.axvspan(er.start, er.end, alpha=0.5, color="#ffd2ae", label="_")
-    return fig
-
+    
                     
 def explore_maneuvers_thresholds(norad_id, df_slice, maneuver_functions):
     raw = df[df.NORAD_CAT_ID == norad_id][df_slice].copy()
@@ -129,7 +129,8 @@ def plot_maneuver_results(df, satcat, norad_id, df_slice, maneuver_functions, co
 
     if combined:
         stuff = (fixed, combined_results, f'{satcat.loc[(satcat.NORAD_CAT_ID == norad_id),"SATNAME"].values[0]} ({norad_id}) ')
-        fig = plot_combined_maneuvers(*stuff)
+        fig, ax = plt.subplots(squeeze=True, figsize=(15,7))
+        plot_combined_maneuvers(fig, ax, *stuff)
         fig.tight_layout(pad=1.5)
         fig.set_facecolor("white")
         fig.legend()
