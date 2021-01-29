@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+import matplotlib.ticker as mtick
 
 def remove_strange_data(input_df):
     # remove points that randomly spiked
@@ -82,15 +83,26 @@ def plot_maneuvers(df, maneuver_results, sat_name):
                     ax[j+1,i].axvspan(er.start, er.end, alpha=0.5, color=cmap((k+1)/(len(thresholds)+2)), label="_")
     return fig
 
+def set_min_ylim(ax,v):
+    sa1,sa2 = ax.get_ylim()
+    if sa2-sa1 < v:
+        sa = (sa1+sa2)/2
+        ax.set_ylim(sa-v/2, sa+v/2)
+
 def plot_combined_maneuvers(fig, ax, df, event_range, sat_name):
     fig.suptitle(sat_name, fontsize=15)
     ax.set_title("Maneuvers Detected", fontsize=13)
     ax.set_xlim(df.index[0], df.index[-1])
     df['SEMIMAJOR_AXIS'].plot(ax=ax, label="SEMIMAJOR_AXIS")
+    # set ylim minimum: 0.1 inclination 0.2 semimajor
     ax2 = ax.twinx()
+    df['INCLINATION'].plot(ax=ax2, color="#fc8215", label="INCLINATION")
     ax.set_ylabel("Semimajor Axis")
     ax2.set_ylabel("Inclination")
-    df['INCLINATION'].plot(ax=ax2, color="#fc8215", label="INCLINATION")
+    ax.ticklabel_format(useOffset=False, style='plain',axis='y')
+    ax2.ticklabel_format(useOffset=False, style='plain',axis='y')
+    set_min_ylim(ax,0.2)
+    set_min_ylim(ax2,0.1)
     for _,er in event_range.iterrows():
         ax.axvspan(er.start, er.end, alpha=0.5, color="#ffd2ae", label="_")
     
@@ -141,3 +153,13 @@ def plot_maneuver_results(df, satcat, norad_id, df_slice, maneuver_functions, co
         fig.tight_layout(pad=1.5)
         fig.set_facecolor("white")
         return raw, fixed, maneuver_results, fig
+    
+    
+def plot_extra_lines(ax, sat, probs, soc_data):
+    for e in sat.index:
+        ax.axvline(x=e, lw=1, c="#00000033")
+    ax2 = ax.twinx()
+    (probs*100).plot(ax=ax2, color="purple", legend=False)
+    ax2.yaxis.set_major_formatter(mtick.PercentFormatter())
+    ax.axvline(x=soc_data.extract_date.min(), lw=2, c="green")
+    ax.axvline(x=soc_data.tca_time.mean(), lw=2, c="red")
