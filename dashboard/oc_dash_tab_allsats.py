@@ -123,6 +123,7 @@ class allsats():
                                 ]),
                                 html.Div(className='box-body',children=[
                                     html.Div(className='table-responsive',children=[
+                                        html.P("This interactive visualization displays all objects, including debris, in orbit around Earth as of January 2021.  Change the settings below or the filters on the right.  The image is generated with Plotly so there are several interactive elements to be explored."),
                                         html.Table(className='table', children=[
                                             html.Tr(children=[
                                                 html.Th('Color by'),

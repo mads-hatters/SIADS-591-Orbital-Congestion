@@ -80,6 +80,26 @@ class intercepts():
                 ]),
                 html.Section(className='content',children=[
                     html.Div(className='row',children=[
+                        html.Div(className='col-md-12',children=[
+                            html.Div(className='box',children=[
+                                html.Div(className='box-header with-border',children=[
+                                    html.H3(className='box-title',children='About'),
+                                    html.Div(className='box-tools pull-right', children=[
+                                        html.Button(className='btn btn-box-tool', **{'data-widget': 'collapse'}, children=[
+                                            html.I(className='fa fa-minus')
+                                        ])
+                                    ])
+                                ]),
+                                html.Div(className='box-body',children=[
+                                    html.Div(className='table-responsive',children=[
+                                        html.P("This is a visualization tool used animate two satellites that came within close proximity of eachother for a specific date/time.  Choose a date range or try some of the other filtering criteria.  The table on the right will update the top close-encounters as reported by SOCRATES on that day for your filter criteria.  The table is automatically sorted by highest priority.  Select one of the satellite pairs to visualize them below using Cesium's 3D world viewer and watch them animate as they come within close proximity of eachother."),
+                                        html.P("SUGGESTION: specify a window of 1 week or less to not overload the server.  If the table returns nothing, make sure the sliders aren't overly restrictive and try a smaller date range."),
+                                    ])
+                                ])
+                            ])
+                        ])
+                    ]),
+                    html.Div(className='row',children=[
                         html.Div(className='col-md-4',children=[
                             html.Div(className='box',children=[
                                 html.Div(className='box-header with-border',children=[
