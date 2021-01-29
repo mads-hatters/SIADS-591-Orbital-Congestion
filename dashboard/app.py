@@ -7,19 +7,23 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 
 import oc_dash_load
+from oc_dash_tab_home import homepage
 from oc_dash_tab_intercepts import intercepts
-from oc_dash_tab_spatialdensity import spatial_density
+from oc_dash_tab_history import history
 from oc_dash_tab_starlink import starlink
 from oc_dash_tab_allsats import allsats
+from oc_dash_tab_maneuvers import maneuvers
 
 # Load Spatial Density and intercept datasets
 gpd_df, tle_df = oc_dash_load.load_data()
 
 # Setup the differnt tabs to display
+tab_home = homepage()
 tab_intercept = intercepts(tle_df, gpd_df)
-tab_spatial = spatial_density(gpd_df)
+tab_history = history(gpd_df)
 tab_starlink = starlink(gpd_df)
 tab_allsats = allsats(gpd_df)
+tab_maneuvers = maneuvers()
 
 # This will style the menu (tabs) to appear correctly
 menu_tabs_styles = {
@@ -100,10 +104,14 @@ app.layout = html.Div(className='skin-blue', children=[
                     html.Li(children=[
                         dcc.Tabs(id="menu-tabs", vertical=True,
                                  parent_style={'float': 'left'},
-                                 value='menu-item-allsats',
+                                 value='menu-item-home',
                                  className="treeview-menu",
                                  style=menu_tabs_styles,
                                  children=[
+                            dcc.Tab(label='Home',
+                                    value='menu-item-home',
+                                    style=menu_tab_style,
+                                    selected_style=menu_tab_selected_style),
                             dcc.Tab(label='All Satellites',
                                     value='menu-item-allsats',
                                     style=menu_tab_style,
@@ -116,8 +124,12 @@ app.layout = html.Div(className='skin-blue', children=[
                                    value='menu-item-starlink',
                                    style=menu_tab_style,
                                    selected_style=menu_tab_selected_style),
-                            dcc.Tab(label='Spatial Density',
-                                    value='menu-item-spatial-density',
+                            dcc.Tab(label='Maneuver Detection',
+                                   value='menu-item-maneuvers',
+                                   style=menu_tab_style,
+                                   selected_style=menu_tab_selected_style),
+                            dcc.Tab(label='History',
+                                    value='menu-item-history',
                                     style=menu_tab_style,
                                     selected_style=menu_tab_selected_style),
                         ]),
@@ -136,14 +148,25 @@ app.layout = html.Div(className='skin-blue', children=[
     Output('page-content', 'children'),
     Input('menu-tabs', 'value'))
 def render_content(menu_item):
-    if menu_item == 'menu-item-intercepts':
+    if menu_item == 'menu-item-home':
+        return tab_home.get_page_content()
+    elif menu_item == 'menu-item-intercepts':
         return tab_intercept.get_page_content()
-    elif menu_item == 'menu-item-spatial-density':
-        return tab_spatial.get_page_content()
+    elif menu_item == 'menu-item-history':
+        return tab_history.get_page_content()
     elif menu_item == 'menu-item-starlink':
         return tab_starlink.get_page_content()
     elif menu_item == 'menu-item-allsats':
         return tab_allsats.get_page_content()
+    elif menu_item == 'menu-item-maneuvers':
+        return tab_maneuvers.get_page_content()
+
+# Handle maneuver image selection
+@app.callback(
+    Output('tab-content', 'children'),
+    Input('maneuver-tabs', 'value'))
+def render_content(tab):
+    return tab_maneuvers.get_tab_content(tab)
 
 # Handle allsats settings
 @app.callback(

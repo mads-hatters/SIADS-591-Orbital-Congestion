@@ -33,7 +33,7 @@ def load_satellite_data():
     Loads the pandas dataframe for current satellite tracking
     '''
     u = oc_dash_utils.utils()
-    gpd_df = pd.read_csv("../data/space-track-gp/gp_20210119.csv.gz")
+    gpd_df = pd.read_csv("../data/space-track-gp/gp_20210129.csv.gz")
     sat_df = pd.read_pickle("../data/satcat_incl_breakup_dates.pkl.gz")
 
     columns = [c for c in gpd_df.columns]
@@ -87,6 +87,9 @@ def load_satellite_data():
     gpd_df['COUNTRY_CODE'] = gpd_df['COUNTRY_CODE'].fillna('TBD')
     gpd_df['country'] = gpd_df['COUNTRY_CODE'].map(ctry_map)
     columns.append('country')
+
+    gpd_df['Orbit'] = gpd_df.apply(u.get_orbit_type, axis=1)
+    columns.append('Orbit')
     
     # Set text to appear on allsat satellites
     gpd_df['allsat_text'] = gpd_df.apply(u.get_allsat_text, axis=1)

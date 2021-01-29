@@ -112,3 +112,23 @@ class utils():
                '<b>NORAD ID</b>: ' + str(x['NORAD_CAT_ID']) + '<br>' +\
                '<b>Object ID</b>: ' + str(x['OBJECT_ID'])
         return text
+
+
+
+    def get_orbit_type(self, row):
+        '''
+        Categorizies satellites by orbit type
+        '''
+        if (row['MEAN_MOTION']>11.25) & (row['ECCENTRICITY']<0.25):
+            return "LEO"
+        elif (row['PERIOD']>=600) & (row['PERIOD']<=800) & (row['ECCENTRICITY']<0.25):
+            return "MEO"
+        elif (row['MEAN_MOTION']>=0.99) & (row['MEAN_MOTION']<=1.01) & (row['ECCENTRICITY']<0.01):
+            return "GEO"
+        elif row['ECCENTRICITY'] > 0.25:
+            return "HEO"
+        else:
+            if row['PERIAPSIS'] < 2000:
+                return "LEO"
+            if (row['PERIAPSIS'] < 35786) & (row['PERIAPSIS'] > 2000):
+                return "MEO"
