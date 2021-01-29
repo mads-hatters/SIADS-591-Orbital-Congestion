@@ -85,7 +85,7 @@ class starlink():
                         html.Div(className='col-md-4',children=[
                             html.Div(className='box',children=[
                                 html.Div(className='box-header with-border',children=[
-                                    html.H3(className='box-title',children='Filter'),
+                                    html.H3(className='box-title',children='Settings'),
                                     html.Div(className='box-tools pull-right', children=[
                                         html.Button(className='btn btn-box-tool', **{'data-widget': 'collapse'}, children=[
                                             html.I(className='fa fa-minus')
