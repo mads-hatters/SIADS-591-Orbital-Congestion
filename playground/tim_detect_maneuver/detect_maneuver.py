@@ -26,9 +26,9 @@ def generate_event_ranges(all_maneuvered):
                            'end' : grouped.EPOCH.last(),
                            'v' : grouped.maneuvered.first()}).reset_index(drop=True)
     events = events[events.v==True][['start','end']]
-    day = pd.offsets.Day()
-    events['start'] = events['start'] - day
-    events['end'] = events['end'] + day
+    interval = pd.offsets.Hour() * 25 # we use 25 hours because 24 sometimes barely misses some daily TLE updates
+    events['start'] = events['start'] - interval
+    events['end'] = events['end'] + interval
     events['group'] = (events.start >= events.end.shift()).cumsum()
     event_ranges = pd.DataFrame({'start' : events.groupby('group').start.first(),
                                  'end' : events.groupby('group').end.last()}).reset_index(drop=True)
