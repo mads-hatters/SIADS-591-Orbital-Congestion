@@ -83,6 +83,10 @@ class allsats():
         np.random.seed(int(seed))
         
         new_fig = go.Figure(self.earth_fig)
+        
+        if indexes is None:
+            return None
+        
         groups = [rows[i]['group'] for i in indexes]
         fin_fig = self.__draw_satellites(new_fig, color_by, groups)
         return dcc.Graph(figure=fin_fig)
