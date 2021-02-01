@@ -170,8 +170,8 @@ def render_content(tab):
 
 # Handle allsats settings
 @app.callback(
-    #Output('allset-table-filter', 'data'),
-    Output('allset-table-load','children'),
+    Output('allsat-table-load','children'),
+    Output('allsat-pie-chart','children'),
     Input('dd-allsat-colorby', 'value'))
 def update_allsat_settings(color_by):
     return tab_allsats.generate_group_table(color_by)
@@ -181,17 +181,17 @@ def update_allsat_settings(color_by):
     Output('allsat-graph-load', 'children'),
     Input('dd-allsat-colorby', 'value'),
     Input('allsat-colorseed', 'value'),
-    Input('allset-table-filter', 'derived_virtual_data'),
-    Input('allset-table-filter', 'derived_virtual_selected_rows'))
+    Input('allsat-table-filter', 'derived_virtual_data'),
+    Input('allsat-table-filter', 'derived_virtual_selected_rows'))
 def update_allsat_display(color_by, color_seed, rows, indexes):
     return tab_allsats.generate_all_sats(color_by, color_seed, rows, indexes)
 
 # Handle allsats select buttons
 @app.callback(
-    [Output('allset-table-filter', 'selected_rows'),],
+    [Output('allsat-table-filter', 'selected_rows'),],
     [Input('satall-selall', 'n_clicks'),
     Input('satall-desall', 'n_clicks')],
-    [State('allset-table-filter', 'derived_virtual_data'),]
+    [State('allsat-table-filter', 'derived_virtual_data'),]
 )
 def update_allsat_selection(selbtn, deselbtn, selected_rows):
     return tab_allsats.select_deselect(selbtn, deselbtn, selected_rows)

@@ -32,6 +32,18 @@ class allsats():
         '''
         self.sat_df = self.__prepare_data(sat_df)
         self.earth_fig = self.__draw_earth()
+    
+    def generate_pie_chart(self, color_by='OBJECT_TYPE'):
+        '''
+        Generates the pie chart based on the color-by selection
+        '''
+        #tmp_df = self.sat_df.groupby(color_by).count()
+        #fig = px.pie(tmp_df, values=color_by, names='index')
+        #fig.update_traces(textposition='inside', textinfo='percent+label')
+        tmp_df = self.sat_df.groupby(color_by)[['NORAD_CAT_ID']].count().reset_index()
+        fig = px.pie(tmp_df, values='NORAD_CAT_ID', names=color_by)
+        fig.update_traces(textposition='inside', textinfo='percent+label')
+        return dcc.Graph(figure=fig)
         
     def generate_group_table(self, color_by='OBJECT_TYPE'):
         '''
@@ -39,8 +51,8 @@ class allsats():
         '''
         groups =  [{'group': x} for x in sorted(list(self.sat_df[color_by].unique()))]
         
-        return dash_table.DataTable(
-                id='allset-table-filter',
+        return (dash_table.DataTable(
+                id='allsat-table-filter',
                 columns=self.table_columns,
                 style_as_list_view=True,
                 style_header={
@@ -59,7 +71,8 @@ class allsats():
                 sort_action="native",
                 data = groups,
                 selected_rows=[i for i in range(len(groups))]
-            )
+            ),
+            self.generate_pie_chart(color_by))
     
     def generate_all_sats(self, color_by='OBJECT_TYPE', seed=None, rows=None, indexes=None):
         '''
@@ -111,7 +124,7 @@ class allsats():
                 ]),
                 html.Section(className='content',children=[
                     html.Div(className='row',children=[
-                        html.Div(className='col-md-6',children=[
+                        html.Div(className='col-md-4',children=[
                             html.Div(className='box',children=[
                                 html.Div(className='box-header with-border',children=[
                                     html.H3(className='box-title',children='Settings'),
@@ -169,7 +182,28 @@ class allsats():
                                 ])
                             ])
                         ]),
-                        html.Div(className='col-md-6',children=[
+                        html.Div(className='col-md-4',children=[
+                            html.Div(className='box',children=[
+                                html.Div(className='box-header with-border',children=[
+                                    html.H3(className='box-title',children='Breakdown'),
+                                    html.Div(className='box-tools pull-right', children=[
+                                        html.Button(className='btn btn-box-tool', **{'data-widget': 'collapse'}, children=[
+                                            html.I(className='fa fa-minus')
+                                        ])
+                                    ])
+                                ]),
+                                html.Div(className='box-body',children=[
+                                    html.Div(className='table-responsive',children=[
+                                        ##########################################################
+                                        # Pie Chart
+                                        dcc.Loading(id='allsat-load-pie-chart', type="circle", children=[
+                                            html.Div(id='allsat-pie-chart')
+                                        ])
+                                    ])
+                                ])
+                            ])
+                        ]),
+                        html.Div(className='col-md-4',children=[
                             html.Div(className='box',children=[
                                 html.Div(className='box-header with-border',children=[
                                     html.H3(className='box-title',children='Filter'),
@@ -187,8 +221,8 @@ class allsats():
                                             html.Button('Select All', id='satall-selall', n_clicks=0, className='btn btn-default'),
                                             html.Button('Deselect All', id='satall-desall', n_clicks=0, className='btn btn-default')
                                         ]),
-                                        dcc.Loading(id='allset-table-load', type="circle", children=[
-                                            dash_table.DataTable(id='allset-table-filter')
+                                        dcc.Loading(id='allsat-table-load', type="circle", children=[
+                                            dash_table.DataTable(id='allsat-table-filter')
                                         ])
                                     ])
                                 ])
