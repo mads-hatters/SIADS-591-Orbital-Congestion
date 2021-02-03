@@ -9,16 +9,16 @@ This work is a collaboration of the following individuals (surname in alphabetic
 - [Nicholas Miller](https://github.com/cassova)
 
 ## Full Report
-The published version of the report can be found here:
+The published version of the report can be found here:<br>
 [Full Report](https://mads-hatters.github.io/)
 
 ## Dashboard
-The dashboard, hosted on Heroku, can be found here:
+The dashboard, hosted on Heroku, can be found here:<br>
 [https://oc-dash.herokuapp.com/](https://oc-dash.herokuapp.com/)
 
 ## Project Origin
-SIADS-591 Milestone I Project - Orbital Congestion
-University of Michigan - School of Information
+SIADS-591 Milestone I Project - Orbital Congestion<br>
+University of Michigan - School of Information<br>
 Masters of Applied Data Science (MADS)
 
 ## Suggested Citation
