@@ -27,9 +27,9 @@ class maneuvers():
         if tab == 'maneuver-aqua':
             return html.Div(children=[
                         html.Img(src='./assets/AQUA (27424).png'),
-                        html.P("Description of above image"),
+                        html.P("The sensitivity of the maneuver thresholds all hold up rather well for the majority of the cases.  The orbit raising and lowering maneuvers were detected correctly, however there were some false positives for the sensitive 10 and 20 rolling neighbor inclination adjustment detection."),
                         html.Img(src='./assets/AQUA (27424)_combined.png'),
-                        html.P("Description of above image")
+                        html.P("When the combined detection method using `rolling_10_neighbor_diff` with 0.008 threshold for inclination and `rolling_3_neighbor_diff` with 0.025 threshold for semimajor axis was used, three maneuvers in early 2010 were missed.")
                    ])
         elif tab == 'maneuver-cosmos':
             return html.Div(children=[
@@ -73,6 +73,13 @@ class maneuvers():
                         html.Img(src='./assets/PAYLOAD C (39210)_combined.png'),
                         html.P("Description of above image")
                    ])
+        elif tab == 'maneuver-starlink':
+            return html.Div(children=[
+                        html.Img(src='./assets/STARLINK-1007 (44713).png'),
+                        html.P("Description of above image"),
+                        html.Img(src='./assets/STARLINK-1007 (44713)_combined.png'),
+                        html.P("Description of above image")
+                   ])
 
 
     def get_page_content(self):
@@ -104,6 +111,7 @@ class maneuvers():
                                         dcc.Tab(label='ISS (ZARYA)', value='maneuver-iss'),
                                         dcc.Tab(label='OCO 2', value='maneuver-oco'),
                                         dcc.Tab(label='PAYLOAD C', value='maneuver-payloadc'),
+                                        dcc.Tab(label='STARLINK-1007', value='maneuver-starlink'),
                                     ]),
                                 ]),
                                 html.Div(id='tab-content')
