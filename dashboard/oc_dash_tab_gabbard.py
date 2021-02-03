@@ -11,7 +11,7 @@ class gabbard():
     Shows Gabbard video
     '''
 
-    base_url = 'https://www.youtube.com/embed/DiBnw786ogc'
+    base_url = 'https://www.youtube.com/embed/mQT5aMa_7iI'
 
     def __init__(self):
         '''
