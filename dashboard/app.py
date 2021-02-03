@@ -13,6 +13,7 @@ from oc_dash_tab_history import history
 from oc_dash_tab_starlink import starlink
 from oc_dash_tab_allsats import allsats
 from oc_dash_tab_maneuvers import maneuvers
+from oc_dash_tab_gabbard import gabbard
 
 # Load Spatial Density and intercept datasets
 gpd_df, tle_df = oc_dash_load.load_data()
@@ -24,6 +25,7 @@ tab_history = history(gpd_df)
 tab_starlink = starlink(gpd_df)
 tab_allsats = allsats(gpd_df)
 tab_maneuvers = maneuvers()
+tab_gabbard = gabbard()
 
 # This will style the menu (tabs) to appear correctly
 menu_tabs_styles = {
@@ -67,7 +69,8 @@ external_css = ['http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.
                 'https://cesium.com/downloads/cesiumjs/releases/1.76/Build/Cesium/Widgets/widgets.css'
                ]
 
-external_scripts = [{'src':'https://cesium.com/downloads/cesiumjs/releases/1.76/Build/Cesium/Cesium.js'}]
+external_scripts = [{'src':'https://cesium.com/downloads/cesiumjs/releases/1.76/Build/Cesium/Cesium.js'}
+                   ]
 
 # Initalize the dashboard
 app = dash.Dash(__name__, 
@@ -116,6 +119,10 @@ app.layout = html.Div(className='skin-blue', children=[
                                     value='menu-item-allsats',
                                     style=menu_tab_style,
                                     selected_style=menu_tab_selected_style),
+                            dcc.Tab(label='History',
+                                    value='menu-item-history',
+                                    style=menu_tab_style,
+                                    selected_style=menu_tab_selected_style),
                             dcc.Tab(label='Intercepts',
                                     value='menu-item-intercepts',
                                     style=menu_tab_style,
@@ -128,8 +135,8 @@ app.layout = html.Div(className='skin-blue', children=[
                                    value='menu-item-maneuvers',
                                    style=menu_tab_style,
                                    selected_style=menu_tab_selected_style),
-                            dcc.Tab(label='History',
-                                    value='menu-item-history',
+                            dcc.Tab(label='Gabbard Diagram',
+                                    value='menu-item-gabbard',
                                     style=menu_tab_style,
                                     selected_style=menu_tab_selected_style),
                         ]),
@@ -160,6 +167,8 @@ def render_content(menu_item):
         return tab_allsats.get_page_content()
     elif menu_item == 'menu-item-maneuvers':
         return tab_maneuvers.get_page_content()
+    elif menu_item == 'menu-item-gabbard':
+        return tab_gabbard.get_page_content()
 
 # Handle maneuver image selection
 @app.callback(
