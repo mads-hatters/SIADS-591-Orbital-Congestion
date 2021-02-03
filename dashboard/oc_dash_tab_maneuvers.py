@@ -5,13 +5,6 @@ import dash
 import dash_html_components as html
 import dash_core_components as dcc
 
-import plotly.express as px
-import plotly.graph_objects as go
-
-import pandas as pd
-import numpy as np
-import math
-
 
 
 class maneuvers():
@@ -113,8 +106,9 @@ class maneuvers():
                                         dcc.Tab(label='PAYLOAD C', value='maneuver-payloadc'),
                                         dcc.Tab(label='STARLINK-1007', value='maneuver-starlink'),
                                     ]),
-                                ]),
-                                html.Div(id='tab-content')
+                                    html.P(" "),
+                                    html.Div(id='tab-content')
+                                ])
                             ])
                         ])
                     ])
