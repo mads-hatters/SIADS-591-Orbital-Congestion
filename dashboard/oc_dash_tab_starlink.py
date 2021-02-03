@@ -75,7 +75,7 @@ class starlink():
                                 ]),
                                 html.Div(className='box-body',children=[
                                     html.Div(className='table-responsive',children=[
-                                        html.P("This is a visualization of all 951 SpaceX's Starlink satellites in orbit as of January 2021.  Starlink intends to launch another 11,000 satellites by 2027 and has requested permission to launch another 30,000 after that."),
+                                        html.P("This is a visualization of all 951 SpaceX's Starlink satellites in orbit as of January 2021.  Starlink intends to launch another 11,000 satellites by 2027 and has requested permission to launch another 30,000 after that. If no satellites are visible, likely the server is overwhelmed.  Please try again or come back later."),
                                         html.P("Satellites launched on the same date have the same color.  While it appears the satellites aren't moving, they actually are.  Try zooming in or increasing the animation speed by adjusting the green arrow on the dial in the bottom left corner.  Enable the path switch on the right to visualize the orbit path of each satellite.  Due to the amount of data, performance will likely be impacted so please keep this disabled if you experience issues."),
                                         html.P("Disclaimer: The position of the satellites is based on out-dated TLE data so it is unlikely the animation you're seeing today is a true reflection of where the satellites are in relation to the earth.")
                                     ])

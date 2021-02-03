@@ -90,6 +90,16 @@ class homepage():
                                             html.Li(html.A(href='https://github.com/cassova',children="Nicholas Miller", target="_blank")),
                                         ])
                                     ),
+                                    html.P(children=[
+                                        "For the full report of the analysis, please ",
+                                        html.A(href='https://mads-hatters.github.io/',children="Click Here", target="_blank"),
+                                        ". The code for this dashboard and the report are open source under the MIT license and can be found ",
+                                        html.A(href='https://github.com/mads-hatters/SIADS-591-Orbital-Congestion',children="Here", target="_blank"),
+                                    ]),
+                                    html.P(children=[
+                                        html.B("Suggested citation: "),
+                                        "Chen-Deng-Miller, Orbital Congestion, 3 Feb 2021, Retrieved from: https://oc-dash.herokuapp.com/"
+                                    ]),
                                 ])
                             ])
                         ])
