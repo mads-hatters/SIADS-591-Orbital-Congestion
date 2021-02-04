@@ -23,3 +23,6 @@ Masters of Applied Data Science (MADS)
 
 ## Suggested Citation
 Chen-Deng-Miller, Orbital Congestion, 3 Feb 2021, Retrieved from: https://github.com/mads-hatters/SIADS-591-Orbital-Congestion
+
+## Redristribution Approval
+The data gathered for this project has received approval from the 18th Space Control Squadron and US Space Command for redistribution as of 4 February 2021.
