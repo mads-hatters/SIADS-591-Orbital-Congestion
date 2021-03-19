@@ -2,7 +2,7 @@
 Space, and more specifically low-earth orbit, is about to get a whole lot busier and this is making many concerned. At present, there are about 2,000 operational satellites in low-earth orbit and more than double that in defunct satellites. But last year in October, SpaceX requested permission to launch 30,000 Starlink satellites into low-earth orbit. This is in addition to the 12,000 that already received approval. These satellites have already begun interrupting astronomical observations, creating light pollution and increasing collision risks in an environment where a collision could trigger a chain reaction which not only endangers current and future satellites but also human lives.
 
 ## Authors
-This work is a collaboration of the following individuals (surname in alphabetical order):
+This work is a collaboration of the following individuals (equal contribution - surname in alphabetical order):
 
 - [Tim Chen](https://github.com/timzai)
 - [Sophie Deng](https://github.com/sophde)
